@@ -1,7 +1,5 @@
 package com.blackwings.space.objects.subsystems;
 
-import com.blackwings.space.objects.subsystems.weapons.SubSystemState;
-
 public interface SubSystem {
     public SubSystemState getState();
 

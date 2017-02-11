@@ -5,7 +5,7 @@ import com.blackwings.space.objects.SpaceObjData;
 import com.blackwings.space.objects.SpaceObjTypes;
 import com.blackwings.space.objects.subsystems.SubSystemsList;
 
-abstract public class ShipData extends SpaceObjData {
+public class ShipData extends SpaceObjData {
     private String name;
     private ShipClasses shipClass;
     private SubSystemsList subSystemsList;

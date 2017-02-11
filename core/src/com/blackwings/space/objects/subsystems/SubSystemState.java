@@ -1,4 +1,4 @@
-package com.blackwings.space.objects.subsystems.weapons;
+package com.blackwings.space.objects.subsystems;
 
 public enum SubSystemState {
     READY,

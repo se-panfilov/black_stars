@@ -1,6 +1,7 @@
 package com.blackwings.space.objects.subsystems.weapons;
 
 import com.blackwings.space.objects.TargetAble;
+import com.blackwings.space.objects.subsystems.SubSystemState;
 import com.blackwings.space.objects.subsystems.weapons.types.Gun;
 
 public class RailGun extends Weapon implements Gun {
