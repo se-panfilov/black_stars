@@ -6,16 +6,22 @@ import com.blackwings.space.objects.subsystems.engines.types.MainEngine;
 public class ImpulseEngine extends Engine implements MainEngine {
 
     final private int ENGINE_SIZE = EngineSizes.getHugeSize();
+
+    private int fuel = 0;
+    final private int MIN_FUEL = 100;
     final private int MAX_FUEL = 100;
+
+    private int health = 100;
     final private int MAX_HEALTH = 100;
     final private int MIN_HEALTH = 0;
+
+    private int thrust = 100;
     final private int MAX_THRUST = 100;
     final private int MIN_THRUST = 0;
-    private int fuel = 0;
+
     private int prepareTime = 100;
     private int cooldownTime = 100;
-    private int health = 100;
-    private int thrust = 100;
+
     private SubSystemState system_state = SubSystemState.READY;
 
     @Override
@@ -77,7 +83,7 @@ public class ImpulseEngine extends Engine implements MainEngine {
 
     @Override
     boolean setFuel(int fuel) {
-        if (fuel <= MAX_FUEL) {
+        if (fuel >= MIN_FUEL && fuel <= MAX_FUEL) {
             this.fuel = fuel;
             return true;
         }
