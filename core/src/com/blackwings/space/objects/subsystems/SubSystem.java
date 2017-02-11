@@ -1,11 +1,13 @@
 package com.blackwings.space.objects.subsystems;
 
+import com.blackwings.space.objects.subsystems.weapons.SubSystemState;
+
 public interface SubSystem {
-    public boolean getState();
+    public SubSystemState getState();
 
-    public boolean setState();
+    public void setState(SubSystemState state);
 
-    public boolean getHealth();
+    public int getHealth();
 
-    public boolean setHealth();
+    public void setHealth(int health);
 }
