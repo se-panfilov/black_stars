@@ -1,8 +1,5 @@
 package com.blackwings.space.objects;
 
-import com.blackwings.ShootParams;
-import com.blackwings.Shoot;
-
 public interface ShootAble {
 
     public void onTakeDamage(Shoot shoot);
