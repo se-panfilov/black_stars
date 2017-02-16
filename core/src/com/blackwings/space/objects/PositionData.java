@@ -1,9 +1,8 @@
 package com.blackwings.space.objects;
 
 import java.util.HashMap;
-import java.util.Map;
 
-abstract public class PositionData {
+public class PositionData {
     private int orientation;
     private HashMap<String, Integer> coordinates;
 

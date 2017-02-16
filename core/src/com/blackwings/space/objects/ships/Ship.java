@@ -3,7 +3,7 @@ package com.blackwings.space.objects.ships;
 import com.blackwings.space.objects.*;
 import com.blackwings.space.objects.subsystems.SubSystemsList;
 
-abstract class Ship implements SpaceObj, SubSystemAble, MoveAble {
+abstract public class Ship implements SpaceObj, SubSystemAble, MoveAble {
 
     private ShipData shipData;
     private SubSystemsList subSystems;
