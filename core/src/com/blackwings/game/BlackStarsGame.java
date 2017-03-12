@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.blackwings.space.objects.PositionData;
@@ -23,15 +22,30 @@ public class BlackStarsGame extends ApplicationAdapter {
     private Texture cruiserImg;
     private OrthographicCamera camera;
     private OrthographicCamera uiCamera;
-    private Array<Ship> shipsList;
+    private Array<Ship> shipsList = new Array<Ship>();
     private Animation<TextureRegion> cruiserAnimation;
     private float cruiserStateTime = 0;
     private Vector2 cruiserPosition = new Vector2();
     private Vector2 cruiserVelocity = new Vector2();
     private Texture background;
 
-    @Override
-    public void create() {
+    private static final float PLANE_JUMP_IMPULSE = 350;
+    private static final float CRUISER_VELOCITY_X = 200;
+    private static final float CRUISER_START_Y = 240;
+    private static final float CRUISER_START_X = 50;
+    private static final float GRAVITY = -20;
+    private GameState gameState;
+    Vector2 gravity = new Vector2();
+
+    private static enum GameState {
+        Start, Run, End
+    }
+
+    private void prepareGameState() {
+        gameState = GameState.Start;
+    }
+
+    private void prepareGameEngine() {
         batch = new SpriteBatch();
 
         camera = new OrthographicCamera();
@@ -41,8 +55,10 @@ public class BlackStarsGame extends ApplicationAdapter {
         uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         uiCamera.update();
 
-        background = new Texture("background.png");
+        background = new Texture("desktop/assets/img/ships/background.png");
+    }
 
+    private void prepareGameObjects() {
         //Ship creation
         String name = "Nameless one";
         PositionData positionData = new PositionData(0, 0, 0, 0);// fake
@@ -58,8 +74,14 @@ public class BlackStarsGame extends ApplicationAdapter {
         shipsList.add(cruiser);
         //TODO (S.Panfilov) curWorkPoint
         //End Ship creation
+    }
 
-        cruiserImg = new Texture("cruiser.png");
+    @Override
+    public void create() {
+        prepareGameEngine();
+        prepareGameObjects();
+
+        cruiserImg = new Texture("desktop/assets/img/ships/cruiser.png");
 //        cruiserImg.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         cruiserAnimation = new Animation<TextureRegion>(0.05f, new TextureRegion(cruiserImg));
         cruiserAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -70,11 +92,12 @@ public class BlackStarsGame extends ApplicationAdapter {
     private void resetWorld() {
 //        score = 0;
 //        groundOffsetX = 0;
-        cruiserPosition.set(PLANE_START_X, PLANE_START_Y);
+        cruiserPosition.set(CRUISER_START_X, CRUISER_START_Y);
         cruiserVelocity.set(0, 0);
-//        gravity.set(0, GRAVITY);
+        gravity.set(0, GRAVITY);
         shipsList.clear();
         camera.position.x = 400;
+        gameState = GameState.Start;
 //
 //        rocks.clear();
 //        for(int i = 0; i < 5; i++) {
@@ -89,15 +112,14 @@ public class BlackStarsGame extends ApplicationAdapter {
 
         if (Gdx.input.justTouched()) {
 //            if(gameState == GameState.Start) {
-//                gameState = GameState.Running;
+//                gameState = GameState.Run;
 //            }
 //            if(gameState == GameState.Running) {
-            cruiserVelocity.set(PLANE_VELOCITY_X, PLANE_JUMP_IMPULSE);
+            cruiserVelocity.set(CRUISER_VELOCITY_X, PLANE_JUMP_IMPULSE);
 //            }
-//            if(gameState == GameState.GameOver) {
-//                gameState = GameState.Start;
-//                resetWorld();
-//            }
+            if (gameState == GameState.End) {
+                resetWorld();
+            }
         }
 
         if (gameState != GameState.Start) cruiserVelocity.add(gravity);
@@ -105,37 +127,39 @@ public class BlackStarsGame extends ApplicationAdapter {
         cruiserPosition.mulAdd(cruiserVelocity, deltaTime);
 
         camera.position.x = cruiserPosition.x + 350;
-        if (camera.position.x - groundOffsetX > ground.getRegionWidth() + 400) {
-            groundOffsetX += ground.getRegionWidth();
-        }
+//        if (camera.position.x - groundOffsetX > ground.getRegionWidth() + 400) {
+//            groundOffsetX += ground.getRegionWidth();
+//        }
 
-        rect1.set(cruiserPosition.x + 20, cruiserPosition.y, plane.getKeyFrames()[0].getRegionWidth() - 20, plane.getKeyFrames()[0].getRegionHeight());
-        for (Rock r : rocks) {
-            if (camera.position.x - r.position.x > 400 + r.image.getRegionWidth()) {
-                boolean isDown = MathUtils.randomBoolean();
-                r.position.x += 5 * 200;
-                r.position.y = isDown ? 480 - rock.getRegionHeight() : 0;
-                r.image = isDown ? rockDown : rock;
-                r.counted = false;
-            }
-            rect2.set(r.position.x + (r.image.getRegionWidth() - 30) / 2 + 20, r.position.y, 20, r.image.getRegionHeight() - 10);
-            if (rect1.overlaps(rect2)) {
-                if (gameState != GameState.GameOver) explode.play();
-                gameState = GameState.GameOver;
-                cruiserVelocity.x = 0;
-            }
-            if (r.position.x < cruiserPosition.x && !r.counted) {
-                score++;
-                r.counted = true;
-            }
-        }
+        //TODO (S.Panfilov) wtf?
+//        rect1.set(cruiserPosition.x + 20, cruiserPosition.y, plane.getKeyFrames()[0].getRegionWidth() - 20, plane.getKeyFrames()[0].getRegionHeight());
 
-        if (cruiserPosition.y < ground.getRegionHeight() - 20 ||
-                cruiserPosition.y + plane.getKeyFrames()[0].getRegionHeight() > 480 - ground.getRegionHeight() + 20) {
-            if (gameState != GameState.GameOver) explode.play();
-            gameState = GameState.GameOver;
-            cruiserVelocity.x = 0;
-        }
+//        for (Rock r : rocks) {
+//            if (camera.position.x - r.position.x > 400 + r.image.getRegionWidth()) {
+//                boolean isDown = MathUtils.randomBoolean();
+//                r.position.x += 5 * 200;
+//                r.position.y = isDown ? 480 - rock.getRegionHeight() : 0;
+//                r.image = isDown ? rockDown : rock;
+//                r.counted = false;
+//            }
+//            rect2.set(r.position.x + (r.image.getRegionWidth() - 30) / 2 + 20, r.position.y, 20, r.image.getRegionHeight() - 10);
+//            if (rect1.overlaps(rect2)) {
+//                if (gameState != GameState.GameOver) explode.play();
+//                gameState = GameState.GameOver;
+//                cruiserVelocity.x = 0;
+//            }
+//            if (r.position.x < cruiserPosition.x && !r.counted) {
+//                score++;
+//                r.counted = true;
+//            }
+//        }
+
+//        if (cruiserPosition.y < ground.getRegionHeight() - 20 ||
+//                cruiserPosition.y + plane.getKeyFrames()[0].getRegionHeight() > 480 - ground.getRegionHeight() + 20) {
+//            if (gameState != GameState.GameOver) explode.play();
+//            gameState = GameState.GameOver;
+//            cruiserVelocity.x = 0;
+//        }
     }
 
     private void drawWorld() {
