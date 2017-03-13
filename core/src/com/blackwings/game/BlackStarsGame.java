@@ -27,7 +27,6 @@ public class BlackStarsGame extends ApplicationAdapter {
     private float cruiserStateTime = 0;
     private Vector2 cruiserPosition = new Vector2();
     private Vector2 cruiserVelocity = new Vector2();
-    private Texture background;
 
     private static final float PLANE_JUMP_IMPULSE = 350;
     private static final float CRUISER_VELOCITY_X = 200;
@@ -52,11 +51,10 @@ public class BlackStarsGame extends ApplicationAdapter {
         uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         uiCamera.update();
 
-        background = new Texture("desktop/assets/img/ships/background.png");
+//        background = new Texture("desktop/assets/img/ships/background.png");
     }
 
     private void prepareGameObjects() {
-        //Ship creation
         String name = "Nameless one";
         PositionData positionData = new PositionData(0, 0, 0, 0);// fake
         SubSystemsList subSystemsList = new SubSystemsList();
@@ -69,17 +67,16 @@ public class BlackStarsGame extends ApplicationAdapter {
 
         Cruiser cruiser = new Cruiser(name, positionData, subSystemsList);
         shipsList.add(cruiser);
-        //TODO (S.Panfilov) curWorkPoint
-        //End Ship creation
     }
 
     @Override
     public void create() {
+        prepareGameState();
         prepareGameEngine();
         prepareGameObjects();
 
         cruiserImg = new Texture("desktop/assets/img/ships/cruiser.png");
-//        cruiserImg.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        cruiserImg.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         cruiserAnimation = new Animation<TextureRegion>(0.05f, new TextureRegion(cruiserImg));
         cruiserAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
@@ -87,20 +84,12 @@ public class BlackStarsGame extends ApplicationAdapter {
     }
 
     private void resetWorld() {
-//        score = 0;
-//        groundOffsetX = 0;
         cruiserPosition.set(CRUISER_START_X, CRUISER_START_Y);
         cruiserVelocity.set(0, 0);
         gravity.set(0, GRAVITY);
         shipsList.clear();
         camera.position.x = 400;
         gamePlayStates = GamePlayStates.Start;
-//
-//        rocks.clear();
-//        for(int i = 0; i < 5; i++) {
-//            boolean isDown = MathUtils.randomBoolean();
-//            rocks.add(new Rock(700 + i * 200, isDown?480-rock.getRegionHeight(): 0, isDown? rockDown: rock));
-//        }
     }
 
     private void updateWorld() {
@@ -108,12 +97,7 @@ public class BlackStarsGame extends ApplicationAdapter {
         cruiserStateTime += deltaTime;
 
         if (Gdx.input.justTouched()) {
-//            if(gamePlayStates == GamePlayStates.Start) {
-//                gamePlayStates = GamePlayStates.Run;
-//            }
-//            if(gamePlayStates == GamePlayStates.Running) {
             cruiserVelocity.set(CRUISER_VELOCITY_X, PLANE_JUMP_IMPULSE);
-//            }
             if (gamePlayStates == GamePlayStates.End) {
                 resetWorld();
             }
@@ -122,74 +106,18 @@ public class BlackStarsGame extends ApplicationAdapter {
         if (gamePlayStates != GamePlayStates.Start) cruiserVelocity.add(gravity);
 
         cruiserPosition.mulAdd(cruiserVelocity, deltaTime);
-
         camera.position.x = cruiserPosition.x + 350;
-//        if (camera.position.x - groundOffsetX > ground.getRegionWidth() + 400) {
-//            groundOffsetX += ground.getRegionWidth();
-//        }
-
-        //TODO (S.Panfilov) wtf?
-//        rect1.set(cruiserPosition.x + 20, cruiserPosition.y, plane.getKeyFrames()[0].getRegionWidth() - 20, plane.getKeyFrames()[0].getRegionHeight());
-
-//        for (Rock r : rocks) {
-//            if (camera.position.x - r.position.x > 400 + r.image.getRegionWidth()) {
-//                boolean isDown = MathUtils.randomBoolean();
-//                r.position.x += 5 * 200;
-//                r.position.y = isDown ? 480 - rock.getRegionHeight() : 0;
-//                r.image = isDown ? rockDown : rock;
-//                r.counted = false;
-//            }
-//            rect2.set(r.position.x + (r.image.getRegionWidth() - 30) / 2 + 20, r.position.y, 20, r.image.getRegionHeight() - 10);
-//            if (rect1.overlaps(rect2)) {
-//                if (gamePlayStates != GamePlayStates.GameOver) explode.play();
-//                gamePlayStates = GamePlayStates.GameOver;
-//                cruiserVelocity.x = 0;
-//            }
-//            if (r.position.x < cruiserPosition.x && !r.counted) {
-//                score++;
-//                r.counted = true;
-//            }
-//        }
-
-//        if (cruiserPosition.y < ground.getRegionHeight() - 20 ||
-//                cruiserPosition.y + plane.getKeyFrames()[0].getRegionHeight() > 480 - ground.getRegionHeight() + 20) {
-//            if (gamePlayStates != GamePlayStates.GameOver) explode.play();
-//            gamePlayStates = GamePlayStates.GameOver;
-//            cruiserVelocity.x = 0;
-//        }
-    }
-
-    private void drawWorld() {
-        camera.update();
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
-
-//        for(Ship ship: shipsList) {
-//            batch.draw(ship.image, ship.position.x, ship.position.y);
-//        }
-
-        batch.draw(cruiserAnimation.getKeyFrame(cruiserStateTime), cruiserPosition.x, cruiserPosition.y);
-        batch.end();
-
-        batch.setProjectionMatrix(uiCamera.combined);
-        batch.begin();
-//        if (gamePlayStates == GamePlayStates.Start) {
-//            batch.draw(ready, Gdx.graphics.getWidth() / 2 - ready.getRegionWidth() / 2, Gdx.graphics.getHeight() / 2 - ready.getRegionHeight() / 2);
-//        }
-        batch.end();
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        batch.begin();
-//        batch.draw(cruiserImg, 0, 0);
-//        batch.end();
 
         updateWorld();
-        drawWorld();
+        World world = new World();
+        world.init();
+        world.draw(camera, uiCamera, batch, cruiserAnimation, cruiserStateTime, cruiserPosition);
     }
 
     @Override
