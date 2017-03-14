@@ -1,7 +1,7 @@
 package com.blackwings.game.map;
 
 
-import java.util.ArrayList;
+import com.badlogic.gdx.utils.Array;
 
 // Hex Flat orientation
 //
@@ -13,11 +13,11 @@ import java.util.ArrayList;
 //    e_____f
 //
 public class Hex {
-    private ArrayList<Coordinate> coordinates;
+    private Array<Coordinate> coordinates;
     private float centerX;
     private float centerY;
-    //TODO (S.Panfilov) Radius should not be null
-    private final int RADIUS = 0;
+    //TODO (S.Panfilov) Radius should not be 0
+    private final int RADIUS = 10;//mock
 
     public Hex(Position position) {
         centerX = position.getGEUnitX();
@@ -31,7 +31,7 @@ public class Hex {
         coordinates = makeHex(centerX, centerY, hexRadius);
     }
 
-    private ArrayList<Coordinate> makeHex(float centerX, float centerY, float radius) {
+    private Array<Coordinate> makeHex(float centerX, float centerY, float radius) {
         //TODO (S.Panfilov) test it
         float ax = centerX - (radius / 2);
         float ay = centerY + radius;
@@ -57,7 +57,7 @@ public class Hex {
         float fy = centerY - radius;
         Coordinate f = new Coordinate(fx, fy);
 
-        ArrayList<Coordinate> coordinates = new ArrayList<Coordinate>();
+        Array<Coordinate> coordinates = new Array<Coordinate>();
         coordinates.add(a);
         coordinates.add(b);
         coordinates.add(c);
@@ -68,7 +68,7 @@ public class Hex {
         return coordinates;
     }
 
-    public ArrayList<Coordinate> getCoordinatesList() {
+    public Array<Coordinate> getCoordinatesList() {
         return coordinates;
     }
 

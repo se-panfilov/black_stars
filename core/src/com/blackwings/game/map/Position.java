@@ -23,6 +23,11 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
         setPositionData(toGEUnits(position));
     }
 
+    public Position(Coordinate coordinate) {
+        positionData.setX(coordinate.getX());
+        positionData.setY(coordinate.getY());
+    }
+
     public Position(InGameUnit inGameUnit) {
         setPositionData(toGEUnits(inGameUnit));
     }

@@ -8,4 +8,20 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
+
+    public float getX() {
+        return x;
+    }
+
+    void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    void setY(float y) {
+        this.y = y;
+    }
 }
