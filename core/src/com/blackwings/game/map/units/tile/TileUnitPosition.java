@@ -14,11 +14,11 @@ public interface TileUnitPosition extends UnitPosition {
 
     TileUnit toTileUnits(InGameUnit unit);
 
-    public int getPositionZ();
-
-    public void setPositionZ(int z);
-
     TileUnit getTileUnits();
+
+    int getTileUnitZ();
+
+    void setTileUnitZ(int z);
 
     float getTileUnitX();
 

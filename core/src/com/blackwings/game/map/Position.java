@@ -122,32 +122,37 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
 
     @Override
     public InGameUnit getInGameUnits() {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        return toInGameUnits(positionData);
     }
 
     @Override
     public float getInGameUnitX() {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        return toInGameUnits(positionData).getX();
     }
 
     @Override
     public float getInGameUnitY() {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        return toInGameUnits(positionData).getY();
     }
 
     @Override
     public void setInGameUnitX(float x) {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        float inGameY = toInGameUnits(positionData).getY();
+        InGameUnit inGameUnit = new InGameUnit(x, inGameY);
+        GEUnit geUnits = toGEUnits(inGameUnit);
+
+        positionData.setX(geUnits.getX());
+        positionData.setY(geUnits.getY());
     }
 
     @Override
     public void setInGameUnitY(float y) {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        float inGameX = toInGameUnits(positionData).getX();
+        InGameUnit inGameUnit = new InGameUnit(inGameX, y);
+        GEUnit geUnits = toGEUnits(inGameUnit);
+
+        positionData.setX(geUnits.getX());
+        positionData.setY(geUnits.getY());
     }
     /////////END InGameUnitPosition////////////
 
@@ -176,45 +181,61 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
     }
 
     @Override
-    public int getPositionZ() {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
-    }
-
-    @Override
-    public void setPositionZ(int z) {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
-    }
-
-    @Override
     public TileUnit getTileUnits() {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        return toTileUnits(positionData);
+    }
+
+    @Override
+    public int getTileUnitZ() {
+        return toTileUnits(positionData).getZ();
+    }
+
+    @Override
+    public void setTileUnitZ(int z) {
+        TileUnit inGame = toTileUnits(positionData);
+        int x = (int) inGame.getX();
+        int y = (int) inGame.getY();
+        TileUnit tileUnit = new TileUnit(x, y, z);
+        GEUnit geUnits = toGEUnits(tileUnit);
+
+        positionData.setX(geUnits.getX());
+        positionData.setY(geUnits.getY());
     }
 
     @Override
     public float getTileUnitX() {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
-    }
-
-    @Override
-    public float getTileUnitY() {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        return toTileUnits(positionData).getX();
     }
 
     @Override
     public void setTileUnitX(float x) {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        TileUnit inGame = toTileUnits(positionData);
+        int _x = (int) x;
+        int y = (int) inGame.getY();
+        int z = inGame.getZ();
+        TileUnit tileUnit = new TileUnit(_x, y, z);
+        GEUnit geUnits = toGEUnits(tileUnit);
+
+        positionData.setX(geUnits.getX());
+        positionData.setY(geUnits.getY());
+    }
+
+    @Override
+    public float getTileUnitY() {
+        return toTileUnits(positionData).getY();
     }
 
     @Override
     public void setTileUnitY(float y) {
-        //TODO (S.Panfilov)
-        throw new Error("Method Not ready");
+        TileUnit inGame = toTileUnits(positionData);
+        int x = (int) inGame.getX();
+        int _y = (int) y;
+        int z = inGame.getZ();
+        TileUnit tileUnit = new TileUnit(x, _y, z);
+        GEUnit geUnits = toGEUnits(tileUnit);
+
+        positionData.setX(geUnits.getX());
+        positionData.setY(geUnits.getY());
     }
     /////////END TileUnitPosition////////////
 }
