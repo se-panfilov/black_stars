@@ -1,6 +1,7 @@
-package com.blackwings.game.map;
+package com.blackwings.game.map.grid;
 
 import com.badlogic.gdx.utils.Array;
+import com.blackwings.game.map.Hex;
 import com.blackwings.game.map.units.gameengine.GEUnit;
 
 public class HexGrid extends Grid {

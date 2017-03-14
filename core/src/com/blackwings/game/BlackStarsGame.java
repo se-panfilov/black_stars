@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.blackwings.game.map.Map;
 import com.blackwings.space.objects.PositionData;
 import com.blackwings.space.objects.ships.Cruiser;
 import com.blackwings.space.objects.ships.Ship;
@@ -40,9 +41,17 @@ public class BlackStarsGame extends ApplicationAdapter {
     @Override
     public void create() {
         prepareGameObjects();
+
         WorldObjects worldObjects = new WorldObjects(shipsList);
+        Context.setWorldObjects(worldObjects);
+
+        //TODO (S.Panfilov) map should be created with some params
+        Map map = new Map();
+        Context.setMap(map);
 
         world = new World(cruiserPosition, cruiserVelocity, gravity, worldObjects);
+        Context.setWorld(world);
+
         world.reset();
     }
 

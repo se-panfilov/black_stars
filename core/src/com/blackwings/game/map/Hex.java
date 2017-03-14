@@ -2,9 +2,10 @@ package com.blackwings.game.map;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.blackwings.game.map.grid.GridItem;
 import com.blackwings.game.map.units.gameengine.GEUnit;
 
-// Hex Flat orientation
+// Flat Orientation Hex
 //
 //     _____
 //    a     b
@@ -15,7 +16,8 @@ import com.blackwings.game.map.units.gameengine.GEUnit;
 //
 public class Hex implements GridItem {
     private Array<GEUnit> coordinates;
-    Position position;
+    private Position position;
+
     //TODO (S.Panfilov) Radius should not be 0
     private final int RADIUS = 10;//mock
 
@@ -78,6 +80,11 @@ public class Hex implements GridItem {
 
     @Override
     public GEUnit getCenter() {
-        return this.position.toGEUnits();
+        return position.toGEUnits();
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
     }
 }
