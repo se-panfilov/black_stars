@@ -9,6 +9,8 @@ import com.blackwings.game.map.units.tile.TileUnit;
 import com.blackwings.game.map.units.tile.TileUnitPosition;
 import com.blackwings.space.objects.SpaceObj;
 
+//TODO (S.Panfilov) perhaps Position too heavy to use it in hexes and other object,
+//Will be better to split it with utils class
 public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPosition {
 
     private GEUnit positionData = new GEUnit();
@@ -18,23 +20,21 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
     }
 
     public Position(Position position) {
-        GEUnit gameUnits = toGEUnits(position);
-        positionData.setX(gameUnits.getX());
-        positionData.setY(gameUnits.getY());
+        setPositionData(toGEUnits(position));
     }
 
     public Position(InGameUnit inGameUnit) {
-        GEUnit gameUnits = toGEUnits(inGameUnit);
-        positionData.setX(gameUnits.getX());
-        positionData.setY(gameUnits.getY());
+        setPositionData(toGEUnits(inGameUnit));
     }
 
     public Position(TileUnit tile) {
-        GEUnit gameUnits = toGEUnits(tile);
+        setPositionData(toGEUnits(tile));
+    }
+
+    private void setPositionData(GEUnit gameUnits) {
         positionData.setX(gameUnits.getX());
         positionData.setY(gameUnits.getY());
     }
-
 
     public Array<SpaceObj> getObjectsInPosition() {
         //TODO (S.Panfilov)
@@ -141,8 +141,7 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
         InGameUnit inGameUnit = new InGameUnit(x, inGameY);
         GEUnit geUnits = toGEUnits(inGameUnit);
 
-        positionData.setX(geUnits.getX());
-        positionData.setY(geUnits.getY());
+        setPositionData(geUnits);
     }
 
     @Override
@@ -151,8 +150,7 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
         InGameUnit inGameUnit = new InGameUnit(inGameX, y);
         GEUnit geUnits = toGEUnits(inGameUnit);
 
-        positionData.setX(geUnits.getX());
-        positionData.setY(geUnits.getY());
+        setPositionData(geUnits);
     }
     /////////END InGameUnitPosition////////////
 
@@ -198,8 +196,7 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
         TileUnit tileUnit = new TileUnit(x, y, z);
         GEUnit geUnits = toGEUnits(tileUnit);
 
-        positionData.setX(geUnits.getX());
-        positionData.setY(geUnits.getY());
+        setPositionData(geUnits);
     }
 
     @Override
@@ -216,8 +213,7 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
         TileUnit tileUnit = new TileUnit(_x, y, z);
         GEUnit geUnits = toGEUnits(tileUnit);
 
-        positionData.setX(geUnits.getX());
-        positionData.setY(geUnits.getY());
+        setPositionData(geUnits);
     }
 
     @Override
@@ -234,8 +230,7 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
         TileUnit tileUnit = new TileUnit(x, _y, z);
         GEUnit geUnits = toGEUnits(tileUnit);
 
-        positionData.setX(geUnits.getX());
-        positionData.setY(geUnits.getY());
+        setPositionData(geUnits);
     }
     /////////END TileUnitPosition////////////
 }
