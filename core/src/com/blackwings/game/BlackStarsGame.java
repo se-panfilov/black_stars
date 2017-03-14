@@ -22,7 +22,6 @@ public class BlackStarsGame extends ApplicationAdapter {
 
     private void prepareGameObjects() {
         String name = "Nameless one";
-        PositionData positionData = new PositionData(0, 0, 0, 0);// fake
         SubSystemsList subSystemsList = new SubSystemsList();
 
         RailGun railGun = new RailGun();
@@ -31,15 +30,19 @@ public class BlackStarsGame extends ApplicationAdapter {
         subSystemsList.add(railGun);
         subSystemsList.add(impulseEngine);
 
-        Cruiser cruiser = new Cruiser(name, positionData, subSystemsList);
+        Cruiser cruiser = new Cruiser(name, subSystemsList);
+        PositionData positionData = new PositionData(0, 0, 0, 0);// fake
+        cruiser.setPosition(positionData);
+
         shipsList.add(cruiser);
     }
 
     @Override
     public void create() {
         prepareGameObjects();
+        WorldObjects worldObjects = new WorldObjects(shipsList);
 
-        world = new World(cruiserPosition, cruiserVelocity, gravity, shipsList);
+        world = new World(cruiserPosition, cruiserVelocity, gravity, worldObjects);
         world.reset();
     }
 

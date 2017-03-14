@@ -17,7 +17,8 @@ public class RailGun extends Weapon implements Gun {
 
     @Override
     public boolean fireAtTarget(TargetAble targetAble) {
-        return false;//TODO (S.Panfilov)
+        //TODO (S.Panfilov)
+        throw new Error("Method Not ready");
     }
 
     @Override

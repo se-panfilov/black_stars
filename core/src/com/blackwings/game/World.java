@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.blackwings.space.objects.ships.Ship;
 
 public class World {
 
@@ -18,7 +16,7 @@ public class World {
     private OrthographicCamera uiCamera;
     private SpriteBatch batch;
     private Vector2 gravity;
-    private Array<Ship> shipsList;
+    private WorldObjects worldObjects;
     private GamePlayStates gamePlayState;
 
     private Texture cruiserImg;
@@ -33,7 +31,7 @@ public class World {
     private static final float PLANE_JUMP_IMPULSE = 350;
     private static final float CRUISER_VELOCITY_X = 200;
 
-    public World(Vector2 cruiserPosition, Vector2 cruiserVelocity, Vector2 gravity, Array<Ship> shipsList) {
+    public World(Vector2 cruiserPosition, Vector2 cruiserVelocity, Vector2 gravity, WorldObjects worldObjects) {
         this.batch = new SpriteBatch();
 
         camera = new OrthographicCamera();
@@ -47,7 +45,7 @@ public class World {
         this.cruiserPosition = cruiserPosition;
         this.cruiserVelocity = cruiserVelocity;
         this.gravity = gravity;
-        this.shipsList = shipsList;
+        this.worldObjects = worldObjects;
         this.gamePlayState = GamePlayStates.Start;
 
         background = new Texture("desktop/assets/img/ships/background.png");
@@ -76,7 +74,7 @@ public class World {
         cruiserPosition.set(CRUISER_START_X, CRUISER_START_Y);
         cruiserVelocity.set(0, 0);
         gravity.set(0, GRAVITY);
-        shipsList.clear();
+        worldObjects.clear();
         camera.position.x = 400;
         gamePlayState = GamePlayStates.Start;
     }

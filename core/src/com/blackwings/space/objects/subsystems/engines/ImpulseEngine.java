@@ -87,7 +87,7 @@ public class ImpulseEngine extends Engine implements MainEngine {
             this.fuel = fuel;
             return true;
         }
-        //throw //TODO (S.Panfilov)throe error
+        //throw //TODO (S.Panfilov)throw error
         return false;
     }
 

@@ -3,9 +3,9 @@ package com.blackwings.space.objects;
 abstract public class SpaceObjData {
     private int size;
     private SpaceObjTypes type;
-    private PositionData positionData;
+    private PositionData positionData = new PositionData(0, 0, 0, 0);
 
-    public SpaceObjData(int size, SpaceObjTypes type, PositionData positionData) {
+    public SpaceObjData(int size, SpaceObjTypes type) {
         setSize(size);
         setType(type);
         setPositionData(positionData);
@@ -15,7 +15,7 @@ abstract public class SpaceObjData {
         return positionData;
     }
 
-    void setPositionData(PositionData positionData) {
+    public void setPositionData(PositionData positionData) {
         this.positionData = positionData;
     }
 

@@ -1,6 +1,5 @@
 package com.blackwings.space.objects.ships;
 
-import com.blackwings.space.objects.PositionData;
 import com.blackwings.space.objects.SpaceObjData;
 import com.blackwings.space.objects.SpaceObjTypes;
 import com.blackwings.space.objects.subsystems.SubSystemsList;
@@ -10,8 +9,8 @@ public class ShipData extends SpaceObjData {
     private ShipClasses shipClass;
     private SubSystemsList subSystemsList;
 
-    public ShipData(int size, SpaceObjTypes type, PositionData positionData, String name, ShipClasses shipClass, SubSystemsList subSystemsList) {
-        super(size, type, positionData);
+    public ShipData(int size, String name, ShipClasses shipClass, SubSystemsList subSystemsList) {
+        super(size, SpaceObjTypes.SHIP);
         setName(name);
         setShipClass(shipClass);
         setSubSystemsList(subSystemsList);
