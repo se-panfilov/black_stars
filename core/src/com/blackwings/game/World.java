@@ -1,7 +1,6 @@
 package com.blackwings.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,8 +11,9 @@ public class World {
 
     private Texture background;
 
-    private OrthographicCamera camera;
-    private OrthographicCamera uiCamera;
+    private Camera camera;
+    //    private OrthographicCamera camera;
+//    private OrthographicCamera uiCamera;
     private SpriteBatch batch;
     private Vector2 gravity;
     private WorldObjects worldObjects;
@@ -31,15 +31,18 @@ public class World {
     private static final float PLANE_JUMP_IMPULSE = 350;
     private static final float CRUISER_VELOCITY_X = 200;
 
-    public World(Vector2 cruiserPosition, Vector2 cruiserVelocity, Vector2 gravity, WorldObjects worldObjects) {
+    public World(Vector2 cruiserPosition, Vector2 cruiserVelocity, Vector2 gravity, WorldObjects worldObjects, Camera camera) {
         this.batch = new SpriteBatch();
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        this.camera = camera;
+        this.camera.setToOrtho(false, 800, 480);
+//        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        camera.update();
 
-        uiCamera = new OrthographicCamera();
-        uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        uiCamera.update();
+//        uiCamera = new OrthographicCamera();
+//        uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        uiCamera.update();
 
         this.cruiserPosition = cruiserPosition;
         this.cruiserPosition = cruiserPosition;
@@ -59,13 +62,13 @@ public class World {
 
     void draw() {
         camera.update();
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.getCombined());
         batch.begin();
-        batch.draw(background, camera.position.x - background.getWidth() / 2, 0);
+        batch.draw(background, camera.getX() - background.getWidth() / 2, 0);
         batch.draw(cruiserAnimation.getKeyFrame(cruiserStateTime), cruiserPosition.x, cruiserPosition.y);
         batch.end();
 
-        batch.setProjectionMatrix(uiCamera.combined);
+//        batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
         batch.end();
     }
@@ -75,7 +78,7 @@ public class World {
         cruiserVelocity.set(0, 0);
         gravity.set(0, GRAVITY);
         worldObjects.clear();
-        camera.position.x = 400;
+        camera.setX(400);
         gamePlayState = GamePlayStates.Start;
     }
 
@@ -98,6 +101,6 @@ public class World {
         if (gamePlayState != GamePlayStates.Start) cruiserVelocity.add(gravity);
 
         cruiserPosition.mulAdd(cruiserVelocity, deltaTime);
-        camera.position.x = cruiserPosition.x + 350;
+        camera.setX(cruiserPosition.x + 350);
     }
 }

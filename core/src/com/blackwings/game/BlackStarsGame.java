@@ -49,7 +49,10 @@ public class BlackStarsGame extends ApplicationAdapter {
         Map map = new Map();
         Context.setMap(map);
 
-        world = new World(cruiserPosition, cruiserVelocity, gravity, worldObjects);
+        Camera camera = new Camera();
+        Context.setCamera(camera);
+
+        world = new World(cruiserPosition, cruiserVelocity, gravity, worldObjects, camera);
         Context.setWorld(world);
 
         world.reset();

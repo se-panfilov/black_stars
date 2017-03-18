@@ -7,6 +7,7 @@ class Context {
     private static World world;
     private static WorldObjects worldObjects;
     private static Map map;
+    private static Camera camera;
 
     static GamePlayState getState() {
         return state;
@@ -34,5 +35,13 @@ class Context {
 
     public static void setMap(Map map) {
         Context.map = map;
+    }
+
+    public static Camera getCamera() {
+        return camera;
+    }
+
+    public static void setCamera(Camera camera) {
+        Context.camera = camera;
     }
 }
