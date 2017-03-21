@@ -1,37 +1,37 @@
 package com.blackwings.game.map;
 
 import com.badlogic.gdx.utils.Array;
-import com.blackwings.game.map.units.gameengine.GEUnit;
-import com.blackwings.game.map.units.gameengine.GEUnitPosition;
-import com.blackwings.game.map.units.ingame.InGameUnit;
-import com.blackwings.game.map.units.ingame.InGameUnitPosition;
-import com.blackwings.game.map.units.tile.TileUnit;
-import com.blackwings.game.map.units.tile.TileUnitPosition;
-import com.blackwings.space.objects.SpaceObj;
+import com.blackwings.game.map.units.concept.ConceptUnitPosition;
+import com.blackwings.game.map.units.concept.tile.TileUnit;
+import com.blackwings.game.map.units.engine.EngineUnit;
+import com.blackwings.game.map.units.engine.EngineUnitPosition;
+import com.blackwings.game.map.units.game.GameUnit;
+import com.blackwings.game.map.units.game.GameUnitPosition;
+import com.blackwings.game.space.objects.SpaceObj;
 
 //TODO (S.Panfilov) perhaps Position too heavy to use it in hexes and other object,
 //Will be better to split it with utils class
-public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPosition {
+public class Position implements EngineUnitPosition, GameUnitPosition, ConceptUnitPosition {
 
-    private GEUnit positionData = new GEUnit();
+    private EngineUnit positionData = new EngineUnit();
 
-    public Position(GEUnit geUnit) {
-        this.positionData = geUnit;
+    public Position(EngineUnit engineUnit) {
+        this.positionData = engineUnit;
     }
 
     public Position(Position position) {
-        setPositionData(toGEUnits(position));
+        setPositionData(toEngineUnits(position));
     }
 
-    public Position(InGameUnit inGameUnit) {
-        setPositionData(toGEUnits(inGameUnit));
+    public Position(GameUnit gameUnit) {
+        setPositionData(toEngineUnits(gameUnit));
     }
 
     public Position(TileUnit tile) {
-        setPositionData(toGEUnits(tile));
+        setPositionData(toEngineUnits(tile));
     }
 
-    private void setPositionData(GEUnit gameUnits) {
+    private void setPositionData(EngineUnit gameUnits) {
         positionData.setX(gameUnits.getX());
         positionData.setY(gameUnits.getY());
     }
@@ -46,191 +46,191 @@ public class Position implements GEUnitPosition, InGameUnitPosition, TileUnitPos
         throw new Error("Method Not ready");
     }
 
-    /////////GEUnitPosition////////////
+    /////////EngineUnitPosition////////////
     @Override
-    public GEUnit toGEUnits() {
-        return toGEUnits(this);
+    public EngineUnit toEngineUnits() {
+        return toEngineUnits(this);
     }
 
     @Override
-    public GEUnit toGEUnits(Position position) {
+    public EngineUnit toEngineUnits(Position position) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public GEUnit toGEUnits(TileUnit unit) {
+    public EngineUnit toEngineUnits(TileUnit unit) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public GEUnit toGEUnits(InGameUnit unit) {
+    public EngineUnit toEngineUnits(GameUnit unit) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public GEUnit getGEUnits() {
+    public EngineUnit getEngineUnits() {
         return positionData;
     }
 
     @Override
-    public float getGEUnitX() {
+    public float getEngineUnitX() {
         return positionData.getX();
     }
 
     @Override
-    public float getGEUnitY() {
+    public float getEngineUnitY() {
         return positionData.getY();
     }
 
     @Override
-    public void setGEUnitX(float x) {
+    public void setEngineUnitX(float x) {
         positionData.setX(x);
     }
 
     @Override
-    public void setGEUnitY(float y) {
+    public void setEngineUnitY(float y) {
         positionData.setY(y);
     }
-    /////////END GEUnitPosition////////////
+    /////////END EngineUnitPosition////////////
 
-    /////////InGameUnitPosition////////////
+    /////////GameUnitPosition////////////
     @Override
-    public InGameUnit toInGameUnits() {
-        return toInGameUnits(this);
+    public GameUnit toGameUnits() {
+        return toGameUnits(this);
     }
 
     @Override
-    public InGameUnit toInGameUnits(Position position) {
+    public GameUnit toGameUnits(Position position) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public InGameUnit toInGameUnits(GEUnit unit) {
+    public GameUnit toGameUnits(EngineUnit unit) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public InGameUnit toInGameUnits(TileUnit unit) {
+    public GameUnit toGameUnits(TileUnit unit) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public InGameUnit getInGameUnits() {
-        return toInGameUnits(positionData);
+    public GameUnit getGameUnits() {
+        return toGameUnits(positionData);
     }
 
     @Override
-    public float getInGameUnitX() {
-        return toInGameUnits(positionData).getX();
+    public float getGameUnitX() {
+        return toGameUnits(positionData).getX();
     }
 
     @Override
-    public float getInGameUnitY() {
-        return toInGameUnits(positionData).getY();
+    public float getGameUnitY() {
+        return toGameUnits(positionData).getY();
     }
 
     @Override
-    public void setInGameUnitX(float x) {
-        float inGameY = toInGameUnits(positionData).getY();
-        InGameUnit inGameUnit = new InGameUnit(x, inGameY);
-        GEUnit geUnits = toGEUnits(inGameUnit);
+    public void setGameUnitX(float x) {
+        float inGameY = toGameUnits(positionData).getY();
+        GameUnit gameUnit = new GameUnit(x, inGameY);
+        EngineUnit engineUnits = toEngineUnits(gameUnit);
 
-        setPositionData(geUnits);
+        setPositionData(engineUnits);
     }
 
     @Override
-    public void setInGameUnitY(float y) {
-        float inGameX = toInGameUnits(positionData).getX();
-        InGameUnit inGameUnit = new InGameUnit(inGameX, y);
-        GEUnit geUnits = toGEUnits(inGameUnit);
+    public void setGameUnitY(float y) {
+        float inGameX = toGameUnits(positionData).getX();
+        GameUnit gameUnit = new GameUnit(inGameX, y);
+        EngineUnit engineUnits = toEngineUnits(gameUnit);
 
-        setPositionData(geUnits);
+        setPositionData(engineUnits);
     }
-    /////////END InGameUnitPosition////////////
+    /////////END GameUnitPosition////////////
 
-    /////////TileUnitPosition////////////
+    /////////ConceptUnitPosition////////////
     @Override
-    public TileUnit toTileUnits() {
-        return toTileUnits(this);
+    public TileUnit toConceptUnits() {
+        return toConceptUnits(this);
     }
 
     @Override
-    public TileUnit toTileUnits(Position position) {
+    public TileUnit toConceptUnits(Position position) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public TileUnit toTileUnits(GEUnit unit) {
+    public TileUnit toConceptUnits(EngineUnit unit) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public TileUnit toTileUnits(InGameUnit unit) {
+    public TileUnit toConceptUnits(GameUnit unit) {
         //TODO (S.Panfilov)
         throw new Error("Method Not ready");
     }
 
     @Override
-    public TileUnit getTileUnits() {
-        return toTileUnits(positionData);
+    public TileUnit getConceptUnits() {
+        return toConceptUnits(positionData);
     }
 
     @Override
-    public int getTileUnitZ() {
-        return toTileUnits(positionData).getZ();
+    public int getConceptUnitZ() {
+        return toConceptUnits(positionData).getZ();
     }
 
     @Override
-    public void setTileUnitZ(int z) {
-        TileUnit inGame = toTileUnits(positionData);
+    public void setConceptUnitZ(int z) {
+        TileUnit inGame = toConceptUnits(positionData);
         int x = (int) inGame.getX();
         int y = (int) inGame.getY();
         TileUnit tileUnit = new TileUnit(x, y, z);
-        GEUnit geUnits = toGEUnits(tileUnit);
+        EngineUnit engineUnits = toEngineUnits(tileUnit);
 
-        setPositionData(geUnits);
+        setPositionData(engineUnits);
     }
 
     @Override
-    public float getTileUnitX() {
-        return toTileUnits(positionData).getX();
+    public float getConceptUnitX() {
+        return toConceptUnits(positionData).getX();
     }
 
     @Override
-    public void setTileUnitX(float x) {
-        TileUnit inGame = toTileUnits(positionData);
+    public void setConceptUnitX(float x) {
+        TileUnit inGame = toConceptUnits(positionData);
         int _x = (int) x;
         int y = (int) inGame.getY();
         int z = inGame.getZ();
         TileUnit tileUnit = new TileUnit(_x, y, z);
-        GEUnit geUnits = toGEUnits(tileUnit);
+        EngineUnit engineUnits = toEngineUnits(tileUnit);
 
-        setPositionData(geUnits);
+        setPositionData(engineUnits);
     }
 
     @Override
-    public float getTileUnitY() {
-        return toTileUnits(positionData).getY();
+    public float getConceptUnitY() {
+        return toConceptUnits(positionData).getY();
     }
 
     @Override
-    public void setTileUnitY(float y) {
-        TileUnit inGame = toTileUnits(positionData);
+    public void setConceptUnitY(float y) {
+        TileUnit inGame = toConceptUnits(positionData);
         int x = (int) inGame.getX();
         int _y = (int) y;
         int z = inGame.getZ();
         TileUnit tileUnit = new TileUnit(x, _y, z);
-        GEUnit geUnits = toGEUnits(tileUnit);
+        EngineUnit engineUnits = toEngineUnits(tileUnit);
 
-        setPositionData(geUnits);
+        setPositionData(engineUnits);
     }
-    /////////END TileUnitPosition////////////
+    /////////END ConceptUnitPosition////////////
 }

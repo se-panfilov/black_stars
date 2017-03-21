@@ -1,7 +1,7 @@
 package com.blackwings.game;
 
 import com.badlogic.gdx.utils.Array;
-import com.blackwings.space.objects.ships.Ship;
+import com.blackwings.game.space.objects.ships.Ship;
 
 public class WorldObjects {
 

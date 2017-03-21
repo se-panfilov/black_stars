@@ -3,7 +3,7 @@ package com.blackwings.game.map;
 
 import com.badlogic.gdx.utils.Array;
 import com.blackwings.game.map.grid.GridItem;
-import com.blackwings.game.map.units.gameengine.GEUnit;
+import com.blackwings.game.map.units.engine.EngineUnit;
 
 // Flat Orientation Hex
 //
@@ -15,7 +15,7 @@ import com.blackwings.game.map.units.gameengine.GEUnit;
 //    e_____f
 //
 public class Hex implements GridItem {
-    private Array<GEUnit> coordinates;
+    private Array<EngineUnit> coordinates;
     private Position position;
 
     //TODO (S.Panfilov) Radius should not be 0
@@ -23,46 +23,46 @@ public class Hex implements GridItem {
 
     public Hex(Position position) {
         this.position = position;
-        coordinates = makeHex(this.position.getGEUnitX(), this.position.getGEUnitY(), RADIUS);
+        coordinates = makeHex(this.position.getEngineUnitX(), this.position.getEngineUnitY(), RADIUS);
     }
 
-    public Hex(GEUnit geUnit) {
-        this.position = new Position(geUnit);
-        coordinates = makeHex(this.position.getGEUnitX(), this.position.getGEUnitY(), RADIUS);
+    public Hex(EngineUnit engineUnit) {
+        this.position = new Position(engineUnit);
+        coordinates = makeHex(this.position.getEngineUnitX(), this.position.getEngineUnitY(), RADIUS);
     }
 
     public Hex(Position position, float hexRadius) {
         this.position = position;
-        coordinates = makeHex(this.position.getGEUnitX(), this.position.getGEUnitY(), hexRadius);
+        coordinates = makeHex(this.position.getEngineUnitX(), this.position.getEngineUnitY(), hexRadius);
     }
 
-    private Array<GEUnit> makeHex(float centerX, float centerY, float radius) {
+    private Array<EngineUnit> makeHex(float centerX, float centerY, float radius) {
         //TODO (S.Panfilov) test it
         float ax = centerX - (radius / 2);
         float ay = centerY + radius;
-        GEUnit a = new GEUnit(ax, ay);
+        EngineUnit a = new EngineUnit(ax, ay);
 
         float bx = centerX + (radius / 2);
         float by = centerY + radius;
-        GEUnit b = new GEUnit(bx, by);
+        EngineUnit b = new EngineUnit(bx, by);
 
         float cx = centerX - radius;
         float cy = centerY;
-        GEUnit c = new GEUnit(cx, cy);
+        EngineUnit c = new EngineUnit(cx, cy);
 
         float dx = centerX + radius;
         float dy = centerY;
-        GEUnit d = new GEUnit(dx, dy);
+        EngineUnit d = new EngineUnit(dx, dy);
 
         float ex = centerX - (radius / 2);
         float ey = centerY - radius;
-        GEUnit e = new GEUnit(ex, ey);
+        EngineUnit e = new EngineUnit(ex, ey);
 
         float fx = centerX + (radius / 2);
         float fy = centerY - radius;
-        GEUnit f = new GEUnit(fx, fy);
+        EngineUnit f = new EngineUnit(fx, fy);
 
-        Array<GEUnit> coordinates = new Array<GEUnit>();
+        Array<EngineUnit> coordinates = new Array<EngineUnit>();
         coordinates.add(a);
         coordinates.add(b);
         coordinates.add(c);
@@ -74,13 +74,13 @@ public class Hex implements GridItem {
     }
 
     @Override
-    public Array<GEUnit> getCoordinatesList() {
+    public Array<EngineUnit> getCoordinatesList() {
         return coordinates;
     }
 
     @Override
-    public GEUnit getCenter() {
-        return position.toGEUnits();
+    public EngineUnit getCenter() {
+        return position.toEngineUnits();
     }
 
     @Override

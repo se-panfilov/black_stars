@@ -2,12 +2,12 @@ package com.blackwings.game.map.grid;
 
 import com.badlogic.gdx.utils.Array;
 import com.blackwings.game.map.Position;
-import com.blackwings.game.map.units.gameengine.GEUnit;
+import com.blackwings.game.map.units.engine.EngineUnit;
 
 public interface GridItem {
-    public Array<GEUnit> getCoordinatesList();
+    public Array<EngineUnit> getCoordinatesList();
 
-    public GEUnit getCenter();
+    public EngineUnit getCenter();
 
     public Position getPosition();
 }

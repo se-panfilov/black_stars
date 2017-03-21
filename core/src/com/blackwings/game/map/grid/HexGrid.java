@@ -2,7 +2,7 @@ package com.blackwings.game.map.grid;
 
 import com.badlogic.gdx.utils.Array;
 import com.blackwings.game.map.Hex;
-import com.blackwings.game.map.units.gameengine.GEUnit;
+import com.blackwings.game.map.units.engine.EngineUnit;
 
 public class HexGrid extends Grid {
 
@@ -22,10 +22,10 @@ public class HexGrid extends Grid {
 
     private static Array<GridItem> makeHexGrid(int rows, int cols, float radius) {
         //TODO (S.Panfilov) test it
-        Array<GEUnit> centres = getCentres(rows, cols, radius);
+        Array<EngineUnit> centres = getCentres(rows, cols, radius);
         Array<GridItem> hexes = new Array<GridItem>();
 
-        for (GEUnit center : centres) {
+        for (EngineUnit center : centres) {
             Hex hex = new Hex(center);
             hexes.add(hex);
         }

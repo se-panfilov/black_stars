@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.blackwings.game.map.Position;
+import com.blackwings.game.map.units.engine.EngineUnit;
+import com.blackwings.game.space.objects.ships.Ship;
 
 public class World {
 
@@ -21,7 +25,7 @@ public class World {
 
     private Texture cruiserImg;
     private Animation<TextureRegion> cruiserAnimation;
-    private Vector2 cruiserPosition;
+    //    private Vector2 cruiserPosition;
     private Vector2 cruiserVelocity;
     private float cruiserStateTime = 0;
 
@@ -31,7 +35,8 @@ public class World {
     private static final float PLANE_JUMP_IMPULSE = 350;
     private static final float CRUISER_VELOCITY_X = 200;
 
-    public World(Vector2 cruiserPosition, Vector2 cruiserVelocity, Vector2 gravity, WorldObjects worldObjects, Camera camera) {
+    public World(WorldObjects worldObjects, Camera camera) {
+        gravity = new Vector2();
         this.batch = new SpriteBatch();
 
         this.camera = camera;
@@ -44,9 +49,9 @@ public class World {
 //        uiCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        uiCamera.update();
 
-        this.cruiserPosition = cruiserPosition;
-        this.cruiserPosition = cruiserPosition;
-        this.cruiserVelocity = cruiserVelocity;
+//        this.cruiserPosition = cruiserPosition;
+//        this.cruiserVelocity = cruiserVelocity;
+        prepareWorldObjects(worldObjects);
         this.gravity = gravity;
         this.worldObjects = worldObjects;
         this.gamePlayState = GamePlayStates.Start;
@@ -60,12 +65,33 @@ public class World {
         this.cruiserAnimation.setPlayMode(Animation.PlayMode.LOOP);
     }
 
+    private void prepareWorldObjects(WorldObjects worldObject) {
+        Array<Ship> shipList = worldObject.getShipsList();
+
+        for (Ship ship : shipList) {
+            EngineUnit engineUnit = new EngineUnit(CRUISER_START_X, CRUISER_START_Y);
+            Position position = new Position(engineUnit);
+            ship.setPosition(position);
+//            ship.setVelocity(cruiserVelocity);
+        }
+    }
+
+    private void resetWorldObject(Array<Ship> shipList) {
+        for (Ship ship : shipList) {
+            EngineUnit engineUnit = new EngineUnit(CRUISER_START_X, CRUISER_START_Y);
+            Position position = new Position(engineUnit);
+            ship.setPosition(position);
+//            ship.setVelocity(0, 0);
+        }
+    }
+
+
     void draw() {
         camera.update();
         batch.setProjectionMatrix(camera.getCombined());
         batch.begin();
         batch.draw(background, camera.getX() - background.getWidth() / 2, 0);
-        batch.draw(cruiserAnimation.getKeyFrame(cruiserStateTime), cruiserPosition.x, cruiserPosition.y);
+//        batch.draw(cruiserAnimation.getKeyFrame(cruiserStateTime), cruiserPosition.x, cruiserPosition.y);
         batch.end();
 
 //        batch.setProjectionMatrix(uiCamera.combined);
@@ -74,8 +100,9 @@ public class World {
     }
 
     void reset() {
-        cruiserPosition.set(CRUISER_START_X, CRUISER_START_Y);
-        cruiserVelocity.set(0, 0);
+        resetWorldObject(worldObjects.getShipsList());
+//        cruiserPosition.set(CRUISER_START_X, CRUISER_START_Y);
+//        cruiserVelocity.set(0, 0);
         gravity.set(0, GRAVITY);
         worldObjects.clear();
         camera.setX(400);
@@ -92,15 +119,15 @@ public class World {
         cruiserStateTime += deltaTime;
 
         if (Gdx.input.justTouched()) {
-            cruiserVelocity.set(CRUISER_VELOCITY_X, PLANE_JUMP_IMPULSE);
+//            cruiserVelocity.set(CRUISER_VELOCITY_X, PLANE_JUMP_IMPULSE);
             if (gamePlayState == GamePlayStates.End) {
                 this.reset();
             }
         }
 
-        if (gamePlayState != GamePlayStates.Start) cruiserVelocity.add(gravity);
+//        if (gamePlayState != GamePlayStates.Start) cruiserVelocity.add(gravity);
 
-        cruiserPosition.mulAdd(cruiserVelocity, deltaTime);
-        camera.setX(cruiserPosition.x + 350);
+//        cruiserPosition.mulAdd(cruiserVelocity, deltaTime);
+//        camera.setX(cruiserPosition.x + 350);
     }
 }

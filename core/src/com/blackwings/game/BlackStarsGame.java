@@ -3,23 +3,20 @@ package com.blackwings.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.blackwings.game.map.Map;
-import com.blackwings.space.objects.PositionData;
-import com.blackwings.space.objects.ships.Cruiser;
-import com.blackwings.space.objects.ships.Ship;
-import com.blackwings.space.objects.subsystems.SubSystemsList;
-import com.blackwings.space.objects.subsystems.engines.ImpulseEngine;
-import com.blackwings.space.objects.subsystems.weapons.RailGun;
+import com.blackwings.game.space.objects.PositionData;
+import com.blackwings.game.space.objects.ships.Cruiser;
+import com.blackwings.game.space.objects.ships.Ship;
+import com.blackwings.game.space.objects.subsystems.SubSystemsList;
+import com.blackwings.game.space.objects.subsystems.engines.ImpulseEngine;
+import com.blackwings.game.space.objects.subsystems.weapons.RailGun;
 
 public class BlackStarsGame extends ApplicationAdapter {
     private Array<Ship> shipsList = new Array<Ship>();
-    private Vector2 cruiserPosition = new Vector2();
-    private Vector2 cruiserVelocity = new Vector2();
+    //    private Vector2 cruiserPosition = new Vector2();
+//    private Vector2 cruiserVelocity = new Vector2();
     private World world;
-
-    private Vector2 gravity = new Vector2();
 
     private void prepareGameObjects() {
         String name = "Nameless one";
@@ -52,7 +49,7 @@ public class BlackStarsGame extends ApplicationAdapter {
         Camera camera = new Camera();
         Context.setCamera(camera);
 
-        world = new World(cruiserPosition, cruiserVelocity, gravity, worldObjects, camera);
+        world = new World(worldObjects, camera);
         Context.setWorld(world);
 
         world.reset();
