@@ -1,4 +1,4 @@
-package com.blackwings.game;
+package com.blackwings.game.world;
 
 public interface WorldObjectActions {
 

@@ -1,6 +1,6 @@
-package com.blackwings.game;
+package com.blackwings.game.state;
 
-class GamePlayState {
+public class GamePlayState {
     private static GamePlayState prevState;
     private static GamePlayState state;
 

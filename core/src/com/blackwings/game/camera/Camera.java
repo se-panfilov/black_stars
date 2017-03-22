@@ -1,4 +1,4 @@
-package com.blackwings.game;
+package com.blackwings.game.camera;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;

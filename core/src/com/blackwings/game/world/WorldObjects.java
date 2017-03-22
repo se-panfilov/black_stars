@@ -1,4 +1,4 @@
-package com.blackwings.game;
+package com.blackwings.game.world;
 
 import com.badlogic.gdx.utils.Array;
 import com.blackwings.game.space.objects.ships.Ship;

@@ -11,12 +11,13 @@ import com.blackwings.game.space.objects.ships.Ship;
 import com.blackwings.game.space.objects.subsystems.SubSystemsList;
 import com.blackwings.game.space.objects.subsystems.engines.ImpulseEngine;
 import com.blackwings.game.space.objects.subsystems.weapons.RailGun;
+import com.blackwings.game.world.WorldObjects;
 
 public class BlackStarsGame extends ApplicationAdapter {
     private Array<Ship> shipsList = new Array<Ship>();
     //    private Vector2 cruiserPosition = new Vector2();
 //    private Vector2 cruiserVelocity = new Vector2();
-    private World world;
+    private com.blackwings.game.world.World world;
 
     private void prepareGameObjects() {
         String name = "Nameless one";
@@ -37,20 +38,23 @@ public class BlackStarsGame extends ApplicationAdapter {
 
     @Override
     public void create() {
+        Array<String> levelsList = new Array<String>();
+        levelsList.add("first");
+        Loader loader = new Loader(levelsList);
         prepareGameObjects();
 
-        WorldObjects worldObjects = new WorldObjects(shipsList);
-        Context.setWorldObjects(worldObjects);
+        com.blackwings.game.world.WorldObjects worldObjects = new WorldObjects(shipsList);
+        Store.setWorldObjects(worldObjects);
 
         //TODO (S.Panfilov) map should be created with some params
         Map map = new Map();
-        Context.setMap(map);
+        Store.setMap(map);
 
-        Camera camera = new Camera();
-        Context.setCamera(camera);
+        com.blackwings.game.camera.Camera camera = new com.blackwings.game.camera.Camera();
+        Store.setCamera(camera);
 
-        world = new World(worldObjects, camera);
-        Context.setWorld(world);
+        world = new com.blackwings.game.world.World(worldObjects, camera);
+        Store.setWorld(world);
 
         world.reset();
     }

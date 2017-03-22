@@ -1,4 +1,4 @@
-package com.blackwings.game;
+package com.blackwings.game.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.blackwings.game.camera.Camera;
 import com.blackwings.game.map.Position;
 import com.blackwings.game.map.units.engine.EngineUnit;
 import com.blackwings.game.space.objects.ships.Ship;
@@ -21,7 +22,7 @@ public class World {
     private SpriteBatch batch;
     private Vector2 gravity;
     private WorldObjects worldObjects;
-    private GamePlayStates gamePlayState;
+    private com.blackwings.game.state.GamePlayStates gamePlayState;
 
     private Texture cruiserImg;
     private Animation<TextureRegion> cruiserAnimation;
@@ -54,7 +55,7 @@ public class World {
         prepareWorldObjects(worldObjects);
         this.gravity = gravity;
         this.worldObjects = worldObjects;
-        this.gamePlayState = GamePlayStates.Start;
+        this.gamePlayState = com.blackwings.game.state.GamePlayStates.Start;
 
         background = new Texture("desktop/assets/img/ships/background.png");
 
@@ -71,7 +72,8 @@ public class World {
         for (Ship ship : shipList) {
             EngineUnit engineUnit = new EngineUnit(CRUISER_START_X, CRUISER_START_Y);
             Position position = new Position(engineUnit);
-            ship.setPosition(position);
+            //TODO (S.Panfilov) setPosition
+//            ship.setPosition(position);
 //            ship.setVelocity(cruiserVelocity);
         }
     }
@@ -80,13 +82,14 @@ public class World {
         for (Ship ship : shipList) {
             EngineUnit engineUnit = new EngineUnit(CRUISER_START_X, CRUISER_START_Y);
             Position position = new Position(engineUnit);
-            ship.setPosition(position);
+            //TODO (S.Panfilov) setPosition
+//            ship.setPosition(position);
 //            ship.setVelocity(0, 0);
         }
     }
 
 
-    void draw() {
+    public void draw() {
         camera.update();
         batch.setProjectionMatrix(camera.getCombined());
         batch.begin();
@@ -99,28 +102,28 @@ public class World {
         batch.end();
     }
 
-    void reset() {
+    public void reset() {
         resetWorldObject(worldObjects.getShipsList());
 //        cruiserPosition.set(CRUISER_START_X, CRUISER_START_Y);
 //        cruiserVelocity.set(0, 0);
         gravity.set(0, GRAVITY);
         worldObjects.clear();
         camera.setX(400);
-        gamePlayState = GamePlayStates.Start;
+        gamePlayState = com.blackwings.game.state.GamePlayStates.Start;
     }
 
-    void clear() {
+    public void clear() {
         batch.dispose();
         cruiserImg.dispose();
     }
 
-    void update() {
+    public void update() {
         float deltaTime = Gdx.graphics.getDeltaTime();
         cruiserStateTime += deltaTime;
 
         if (Gdx.input.justTouched()) {
 //            cruiserVelocity.set(CRUISER_VELOCITY_X, PLANE_JUMP_IMPULSE);
-            if (gamePlayState == GamePlayStates.End) {
+            if (gamePlayState == com.blackwings.game.state.GamePlayStates.End) {
                 this.reset();
             }
         }
