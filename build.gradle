@@ -31,7 +31,7 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url 'https://jitpack.io' }
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -44,7 +44,6 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        compile 'com.github.glung:redux-java:1.0'
     }
 }
 
@@ -100,6 +99,10 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile 'com.github.glung:redux-java:1.0'
+//        compile 'com.github.brianegan.bansa:bansa:1.0.0-beta'
+//        debugCompile 'com.github.brianegan.bansa:bansaDevTools:1.0.0-beta'
+//        debugCompile 'com.github.brianegan.bansa:bansaDevToolsUi:1.0.0-beta'
     }
 }
 
