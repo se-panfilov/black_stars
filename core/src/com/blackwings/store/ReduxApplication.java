@@ -17,7 +17,7 @@ class ReduxApplication {
         runDemo(store, stream);
     }
 
-    static void runDemo(redux.api.Store<Integer> store, PrintStream stream) {
+    private static void runDemo(redux.api.Store<Integer> store, PrintStream stream) {
         store.subscribe(new Subscriber(store, stream));
         store.dispatch(IncrementAction.INCREMENT); // print 1
         store.dispatch(IncrementAction.DECREMENT); // print 0
