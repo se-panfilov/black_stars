@@ -1,38 +1,28 @@
 package com.blackwings.store;
 
-import redux.api.Store;
+import com.blackwings.store.action.type.IncrementAction;
+import com.blackwings.store.reducer.MyReducer;
+import com.glung.redux.Store;
 
 import java.io.PrintStream;
 
+//import com.glung.redux.Store;
+
 class ReduxApplication {
-    private final redux.api.Store<Integer> store;
-    private final PrintStream stream;
 
-    ReduxApplication(redux.api.Store.Creator<Integer> storeCreator, PrintStream stream) {
-        store = storeCreator.create(new MyReducer(), 0);
-        this.stream = stream;
+    public static void main(String[] args) {
+        final Store.Creator<Integer> storeCreator = new Store.Creator<Integer>();
+        redux.api.Store<Integer> store = storeCreator.create(new MyReducer(), 0);
+        PrintStream stream = System.out;
+        runDemo(store, stream);
     }
 
-    void runDemo() {
-        store.subscribe(new MySubscriber(store, stream));
-        store.dispatch(Action.INCREMENT); // print 1
-        store.dispatch(Action.DECREMENT); // print 0
+    static void runDemo(redux.api.Store<Integer> store, PrintStream stream) {
+        store.subscribe(new Subscriber(store, stream));
+        store.dispatch(IncrementAction.INCREMENT); // print 1
+        store.dispatch(IncrementAction.DECREMENT); // print 0
         store.dispatch("unknown action"); // print 0
-        store.dispatch(Action.INCREMENT); // print 1
+        store.dispatch(IncrementAction.INCREMENT); // print 1
     }
 
-    private static class MySubscriber implements redux.api.Store.Subscriber {
-        private final redux.api.Store<Integer> store;
-        private final PrintStream stream;
-
-        private MySubscriber(Store<Integer> store, PrintStream stream) {
-            this.store = store;
-            this.stream = stream;
-        }
-
-        @Override
-        public void onStateChanged() {
-            stream.println(store.getState());
-        }
-    }
 }
