@@ -44,17 +44,17 @@ public class BlackStarsGame extends ApplicationAdapter {
         prepareGameObjects();
 
         com.blackwings.game.world.WorldObjects worldObjects = new WorldObjects(shipsList);
-        Store.setWorldObjects(worldObjects);
+//        Store.setWorldObjects(worldObjects);
 
         //TODO (S.Panfilov) map should be created with some params
         Map map = new Map();
-        Store.setMap(map);
+//        Store.setMap(map);
 
         com.blackwings.game.camera.Camera camera = new com.blackwings.game.camera.Camera();
-        Store.setCamera(camera);
+//        Store.setCamera(camera);
 
         world = new com.blackwings.game.world.World(worldObjects, camera);
-        Store.setWorld(world);
+//        Store.setWorld(world);
 
         world.reset();
     }

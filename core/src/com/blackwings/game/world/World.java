@@ -22,7 +22,7 @@ public class World {
     private SpriteBatch batch;
     private Vector2 gravity;
     private WorldObjects worldObjects;
-    private com.blackwings.game.state.GamePlayStates gamePlayState;
+//    private GamePlayStates gamePlayState;
 
     private Texture cruiserImg;
     private Animation<TextureRegion> cruiserAnimation;
@@ -55,7 +55,7 @@ public class World {
         prepareWorldObjects(worldObjects);
         this.gravity = gravity;
         this.worldObjects = worldObjects;
-        this.gamePlayState = com.blackwings.game.state.GamePlayStates.Start;
+//        this.gamePlayState = GamePlayStates.Start;
 
         background = new Texture("desktop/assets/img/ships/background.png");
 
@@ -109,7 +109,7 @@ public class World {
         gravity.set(0, GRAVITY);
         worldObjects.clear();
         camera.setX(400);
-        gamePlayState = com.blackwings.game.state.GamePlayStates.Start;
+//        gamePlayState = GamePlayStates.Start;
     }
 
     public void clear() {
@@ -123,9 +123,9 @@ public class World {
 
         if (Gdx.input.justTouched()) {
 //            cruiserVelocity.set(CRUISER_VELOCITY_X, PLANE_JUMP_IMPULSE);
-            if (gamePlayState == com.blackwings.game.state.GamePlayStates.End) {
-                this.reset();
-            }
+//            if (gamePlayState == GamePlayStates.End) {
+//                this.reset();
+//            }
         }
 
 //        if (gamePlayState != GamePlayStates.Start) cruiserVelocity.add(gravity);
