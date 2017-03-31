@@ -1,19 +1,19 @@
 package com.blackwings.store.reducer;
 
-import com.blackwings.store.state.GlobalState;
+import com.blackwings.store.store.GlobalStore;
 
-abstract class Reducer implements redux.api.Reducer<GlobalState> {
+abstract class Reducer implements redux.api.Reducer<GlobalStore> {
 
     private Class expectedType;
 
     @Override
-    public GlobalState reduce(GlobalState state, Object action) {
+    public GlobalStore reduce(GlobalStore state, Object action) {
         if (!isActionTypeCorrect(action)) return state;
         return reduceData(state, action);
     }
 
-    public boolean isActionTypeCorrect(Object action) {
-        //TODO (S.Panfilov) checkif it'swotk
+    boolean isActionTypeCorrect(Object action) {
+        //TODO (S.Panfilov) checkif it's wotk
         return action.getClass().isInstance(expectedType);
     }
 
@@ -21,5 +21,5 @@ abstract class Reducer implements redux.api.Reducer<GlobalState> {
         this.expectedType = aClass;
     }
 
-    abstract public GlobalState reduceData(GlobalState state, Object action);
+    abstract public GlobalStore reduceData(GlobalStore state, Object action);
 }

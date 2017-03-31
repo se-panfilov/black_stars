@@ -1,18 +1,18 @@
 package com.blackwings.store.reducer;
 
-import com.blackwings.store.state.GlobalState;
-import com.blackwings.store.type.GameStateTypes;
+import com.blackwings.store.action.Actions;
+import com.blackwings.store.store.GlobalStore;
 
 public class GameStateReducer extends Reducer {
 
     @Override
-    public GlobalState reduceData(GlobalState state, Object action) {
-        return reduceData(state, (GameStateTypes) action);
+    public GlobalStore reduceData(GlobalStore state, Object action) {
+        return reduceData(state, (Actions) action);
     }
 
-    public GlobalState reduceData(GlobalState state, GameStateTypes action) {
-        GlobalState newState = state.clone();
-        newState.gamePlayState = action;
+    public GlobalStore reduceData(GlobalStore state, Actions stateType) {
+        GlobalStore newState = state.clone();
+        newState.gamePlayState = stateType;
         return newState;
     }
 }
