@@ -69,10 +69,10 @@ public class BlackStarsGame extends ApplicationAdapter {
     @Override
     public void create() {
 
-
         String version = System.getProperty("java.version");
         System.out.print("Run under JAVA: " + version);
 
+        //TODO (S.Panfilov) will be better to read it during the build time
         FileReader file = getFile("/Users/sparex2/work/black_stars/core/src/com/blackwings/js/Main.js");
         String fnName = "Main";
         String fnArgs = null;
